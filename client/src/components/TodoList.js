@@ -43,7 +43,6 @@ const TodoList = () => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-        debugger;
         setState(open);
     };
 
