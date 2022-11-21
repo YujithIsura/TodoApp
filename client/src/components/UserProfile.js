@@ -1,20 +1,22 @@
 import React from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
+import { Box, Paper } from "@mui/material";
+import TodoForm from './TodoForm';
 
 
 const UserProfile = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
-    
-    if(isLoading){
+
+    if (isLoading) {
         return <div>Loading..</div>
-    } 
+    }
     return (
         isAuthenticated && (
-            <div>
-                <img src={user.picture}/>
-                <h2>{user.name}</h2>
-                <p>{user.email}</p>
-            </div>
+            <Box sx={{ flexGrow: 1 }} >
+                <Paper variant="outlined" >
+                    <TodoForm />
+                </Paper>
+            </Box>
         )
     )
 }
