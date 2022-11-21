@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Paper } from "@mui/material";
 import TodoForm from './TodoForm';
 import FilterSection from './FilterSection';
+import TodoList from './TodoList';
 
 
 
@@ -20,6 +21,9 @@ const UserProfile = () => {
                 </Paper>
                 <Paper sx={{ marginBottom: 2 }} variant="outlined" >
                     <FilterSection />
+                </Paper>
+                <Paper sx={{ marginBottom: 2 }} variant="outlined" >
+                    <TodoList />
                 </Paper>
             </Box>
         )
