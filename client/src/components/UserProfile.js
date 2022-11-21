@@ -2,6 +2,8 @@ import React from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Paper } from "@mui/material";
 import TodoForm from './TodoForm';
+import FilterSection from './FilterSection';
+
 
 
 const UserProfile = () => {
@@ -13,8 +15,11 @@ const UserProfile = () => {
     return (
         isAuthenticated && (
             <Box sx={{ flexGrow: 1 }} >
-                <Paper variant="outlined" >
+                <Paper sx={{ marginBottom: 2 }} variant="outlined" >
                     <TodoForm />
+                </Paper>
+                <Paper sx={{ marginBottom: 2 }} variant="outlined" >
+                    <FilterSection />
                 </Paper>
             </Box>
         )
