@@ -29,8 +29,14 @@ const TodoList = (props) => {
     const [updateId, setUpdateId] = useState(null);
 
 
-    const handleClickOpen = () => {
-      setOpen(true);
+    const handleRemove = () => {
+      props.handleDelete(updateId);
+      handleClose();
+    };
+
+    const handleClickOpen = (open,id) => (event) => {
+        setOpen(true);
+        setUpdateId(id);
     };
   
     const handleClose = () => {
@@ -45,7 +51,6 @@ const TodoList = (props) => {
         setState(open);
         setUpdateId(id);
         setUpdateStatus(true);
-        // props.getOneTodo(id)
     };
 
     const list = () => (
@@ -101,7 +106,7 @@ const TodoList = (props) => {
                                     <IconButton onClick={toggleDrawer(true,anchor.id)} aria-label="edit">
                                         <EditIcon />
                                     </IconButton>
-                                    <IconButton onClick={handleClickOpen} aria-label="delete">
+                                    <IconButton onClick={handleClickOpen(true,anchor.id)} aria-label="delete">
                                         <DeleteIcon />
                                     </IconButton>
                                 </Box>
@@ -129,7 +134,7 @@ const TodoList = (props) => {
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancel</Button>
-                                <Button color="error" onClick={handleClose}>Delete</Button>
+                                <Button color="error" onClick={handleRemove}>Delete</Button>
                             </DialogActions>
                         </Dialog>
                         <Divider variant="inset" component="li" />

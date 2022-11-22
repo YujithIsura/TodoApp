@@ -100,6 +100,20 @@ const UserProfile = () => {
         setTodoList(newState);
       };
 
+      const handleDelete = async (id) => {
+        try {
+            const response = await api.delete(`/api/todo/${id}`, {});
+            setTodoList(current =>
+                  current.filter(todo => {
+                    // 👇️ remove object that has id equal to 2
+                    return todo.id !== id;
+                  }),
+                );
+        } catch (error) {
+            console.log("Error: ", error.response);
+        }
+    };
+
     if (isLoading) {
         return <div>Loading..</div>
     }
@@ -127,6 +141,7 @@ const UserProfile = () => {
                     <TodoList
                         todoList={todoList}
                         handleChange={handleChange}
+                        handleDelete={handleDelete}
                         newref={ref}
                         getOneTodo={getOneTodo}
                         setTodoList={setTodoList}

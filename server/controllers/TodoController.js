@@ -27,6 +27,16 @@ const updateTodo = async (req, res) => {
   res.status(200).send(todo);
 }
 
+// delete product by id
+const deleteTodo = async (req, res) => {
+
+  let id = req.params.id
+  
+  await Todo.destroy({ where: { id: id }} )
+
+  res.status(200).send('Todo is deleted !')
+}
+
 // get single Todo
 const getOneTodo = async (req, res) => {
 
@@ -47,5 +57,6 @@ module.exports = {
   insertTodo,
   updateTodo,
   getTodoList,
-  getOneTodo
+  getOneTodo,
+  deleteTodo
 }
