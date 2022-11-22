@@ -4,8 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const LogoutButton = () => {
     const { logout, isAuthenticated } = useAuth0();
-    console.log("isAuthenticated",isAuthenticated);
-debugger;
+    
     return (
         isAuthenticated && (
             <button onClick={() => logout({returnTo: window.location.origin})}>Sign Out</button>
