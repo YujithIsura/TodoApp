@@ -19,6 +19,7 @@ const TodoForm = () => {
         }
         AddItem();
     }
+    debugger;
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid justifyContent="center" container spacing={2} p={2}>
