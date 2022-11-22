@@ -51,6 +51,14 @@ const getTodoList = async (req, res) => {
   res.status(200).send(todoList)
 }
 
+// Get Todo List By Status
+const getTodoListByStatus = async (req, res) => {
+
+  let status = req.params.status
+  let todo = await Todo.findAll({ where: { status: status }})
+  res.status(200).send(todo)
+}
+
 
 
 module.exports = {
@@ -58,5 +66,6 @@ module.exports = {
   updateTodo,
   getTodoList,
   getOneTodo,
-  deleteTodo
+  deleteTodo,
+  getTodoListByStatus
 }

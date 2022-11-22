@@ -26,19 +26,25 @@ const TodoForm = () => {
 
     };
 
-    const handleClick = () => {
+    const handleClickFilter = () => {
         // if (task.length === 0) {
         //     setError("Please enter title");
         //     return;
         // }
         AddItem();
     }
+    const handleClickCheckBox = (e) => {
+        if(e.target.value && e.target.checked){
+
+        }
+        debugger;
+    }
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid justifyContent="center" container spacing={2} p={2}>
                 <Grid item xs={12} sm={6} lg={3}>
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Todo" />
+                        <FormControlLabel control={<Checkbox value="Todo" defaultChecked onClick={handleClickCheckBox}  />} label="Todo" />
                         <FormControlLabel control={<Checkbox />} label="In Progress" />
                         <FormControlLabel control={<Checkbox />} label="Done" />
                     </FormGroup>
@@ -66,7 +72,7 @@ const TodoForm = () => {
                     </LocalizationProvider>
                 </Grid>
                 <Grid marginTop={6} item xs={12} sm={6} lg={1}>
-                    <Button variant="contained" color="primary" onClick={handleClick}>
+                    <Button variant="contained" color="primary" onClick={handleClickFilter}>
                         Filter
                     </Button>
                 </Grid>
