@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Box, Grid, Typography, Divider, Button } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -22,10 +22,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-const TodoList = () => {
-    const [alignment, setAlignment] = useState('Todo');
+const TodoList = (props) => {
     const [state, setState] = useState(false);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [updateStatus, setUpdateStatus] = useState(false);
+    const [updateId, setUpdateId] = useState(null);
+
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -35,33 +37,16 @@ const TodoList = () => {
       setOpen(false);
     };
 
-    const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment);
-    };
-
-    const toggleDrawer = (open) => (event) => {
+    const toggleDrawer = (open,id) => (event) => {
+        debugger;
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
         setState(open);
+        setUpdateId(id);
+        setUpdateStatus(true);
+        // props.getOneTodo(id)
     };
-
-    let todoList = [
-        {
-            "id": "1",
-            "task": "purple",
-            "description": "minivan",
-            "file": "ff",
-            "status": "Todo"
-        },
-        {
-            "id": "2",
-            "task": "purple",
-            "description": "minivan",
-            "file": "ff",
-            "status": "Todo"
-        }
-    ]
 
     const list = () => (
         <Box
@@ -70,31 +55,23 @@ const TodoList = () => {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
         >
-            <TodoForm />
+            <TodoForm setTodoList={props.setTodoList} todoList={props.todoList} updateId={updateId} updateStatus={updateStatus} update="update" />
         </Box>
     );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            {todoList.map((anchor) => (
+            {props.todoList && props.todoList.map((anchor) => (
                 <React.Fragment key={anchor.id}>
                     <List sx={{ width: '100%', justifyContent: 'center', bgcolor: 'background.paper' }}>
                         <Grid justifyContent="center" direction="row" container >
                             <Grid item xs={12} sm={6} lg={4}>
                                 <ListItem alignItems="flex-start">
                                     <ListItemText
-                                        primary="Brunch this weekend?"
+                                        primary={anchor.taskName}
                                         secondary={
                                             <React.Fragment>
-                                                <Typography
-                                                    sx={{ display: 'inline' }}
-                                                    component="span"
-                                                    variant="body2"
-                                                    color="text.primary"
-                                                >
-                                                    Ali Connors
-                                                </Typography>
-                                                {" — I'll be in your neighborhood doing errands this…"}
+                                                {anchor.taskDescription}
                                             </React.Fragment>
                                         }
                                     />
@@ -104,22 +81,24 @@ const TodoList = () => {
                                 <Box textAlign='center'>
                                     <ToggleButtonGroup
                                         color="primary"
-                                        value={alignment}
+                                        value={anchor.status}
+                                        id={anchor.id}
+                                        ref={props.newref}
                                         exclusive
                                         sx={{ alignItems: 'center' }}
                                         size='small'
-                                        onChange={handleChange}
+                                        onChange={props.handleChange}
                                         aria-label="Platform"
                                     >
                                         <ToggleButton value="Todo">Todo</ToggleButton>
-                                        <ToggleButton value="InProgress">In Progress</ToggleButton>
+                                        <ToggleButton value="InProgres">In Progress</ToggleButton>
                                         <ToggleButton value="Done">Done</ToggleButton>
                                     </ToggleButtonGroup>
                                 </Box>
                             </Grid>
                             <Grid marginTop={3} justifyContent="center" item xs={12} sm={6} lg={2}>
                                 <Box textAlign='center'>
-                                    <IconButton onClick={toggleDrawer(true)} aria-label="edit">
+                                    <IconButton onClick={toggleDrawer(true,anchor.id)} aria-label="edit">
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton onClick={handleClickOpen} aria-label="delete">

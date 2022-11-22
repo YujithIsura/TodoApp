@@ -35,4 +35,12 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.todos = require('./Todo.js')(sequelize, Sequelize.DataTypes)
+
+db.sequelize.sync({ force: false })
+.then(() => {
+    console.log('yes re-sync done!')
+})
+
+
 module.exports = db;

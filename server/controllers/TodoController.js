@@ -1,32 +1,51 @@
-exports.create = (req, res) => {
-    const Todo = require("./models/Todo");
+const db = require('../models');
 
-    // Validate request
-    if (!req.body.taskName) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-      return;
-    }
-  
-    // Create a Todo
-    const todos = {
-      taskName:req.body.taskName,
-            taskDescription:req.body.taskDescription,
-            fileName:req.body.fileName,
-            filePath:req.body.filePath,
-            status:"Todo"
-    };
-  
-    // Save Todo in the database
-    Todo.create(todos)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Todo."
-        });
-      });
+// create main Model
+const Todo = db.todos;
+
+// Create a Todo
+const insertTodo = async (req, res) => {
+  const todos = {
+          taskName:req.body.task,
+          taskDescription:req.body.description,
+          fileName:req.body.fileName,
+          filePath:req.body.filePath,
+          status:"Todo"
   };
+
+  const todo = await Todo.create(todos);
+  res.status(200).send(todo);
+}
+
+// update a Todo
+const updateTodo = async (req, res) => {
+
+  let id = req.params.id
+
+  const todo = await Todo.update({ status: req.body.status }, { where: { id: id }})
+
+  res.status(200).send(todo);
+}
+
+// get single Todo
+const getOneTodo = async (req, res) => {
+
+  let id = req.params.id
+  let todo = await Todo.findOne({ where: { id: id }})
+  res.status(200).send(todo)
+}
+
+// Get Todo List
+const getTodoList = async (req, res) => {
+  const todoList = await Todo.findAll({})
+  res.status(200).send(todoList)
+}
+
+
+
+module.exports = {
+  insertTodo,
+  updateTodo,
+  getTodoList,
+  getOneTodo
+}
